@@ -171,6 +171,35 @@ BivTestPower <- function(g, bg, t, s, design) {
 
 # -----------------------------------------------------------------------------
 
+#' Power Calculation for Linear Regression
+#' 
+#' @param alpha Type I error level. 
+#' @param beta Regression coefficient.
+#' @param covar_var Marginal variance of the covariate.
+#' @param n Sample size.
+#' @param resid_var Residual variance of the response given the covariate.
+#' @return Numeric estimated power of the two-sided chi-square test.
+#' 
+#' @import stats
+#' @export 
+
+Power.LinReg <- function(alpha = 0.05, beta, covar_var, n, resid_var) {
+  
+  # Non-centrality parameter.
+  ncp <- n * beta^2 * covar_var / resid_var
+  
+  # Power.
+  power <- pchisq(
+    q = qchisq(p = alpha, df = 1, lower.tail = FALSE),
+    df = 1,
+    ncp = ncp,
+    lower.tail = FALSE
+  ) 
+  
+  return(power)
+}
+
+
 #' University Test Power.
 #' 
 #' @param g Genotype vector.

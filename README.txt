@@ -1,3 +1,5 @@
+# Ensure dependencies in Rscripts/Dependencies.R are installed.
+
 # Type I error and H0 estimation simulations:
 sh SizeSim.sh
 
