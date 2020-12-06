@@ -1,7 +1,7 @@
-# Estimation and type I error simulations:
+# Type I error and H0 estimation simulations:
 sh SizeSim.sh
 
-# Power and relative efficiency simulations:
+# Power, relative efficiency, and H1 estimation simulations:
 sh PowerSim.sh
 
 # Prepare GTEx figures and tables:
