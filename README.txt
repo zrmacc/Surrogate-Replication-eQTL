@@ -9,4 +9,4 @@ sh PowerSim.sh
 # Prepare GTEx figures and tables:
 sh GTEx.sh
 
-# SSN eQTL mapping summary statistics are located Data/SSN.rds, and descriptions of the fields are provided in Data/Description.tsv.
+# SSN eQTL summary statistics are located Data/SSN.rds, and descriptions of the fields are provided in Data/Description.tsv.
