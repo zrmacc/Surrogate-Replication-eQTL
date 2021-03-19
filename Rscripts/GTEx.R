@@ -1,4 +1,4 @@
-# Purpose: Power simulations for surrogate model
+# Purpose: GTEx analysis script.
 # Updated: 2020-12-02
 
 # Packages.
@@ -8,7 +8,7 @@ library(RNOmni)
 library(SurrogateRegression)
 
 # -----------------------------------------------------------------------------
-# Unpack simulation settings.
+# Unpack analysis settings.
 # -----------------------------------------------------------------------------
 
 # Command line options.
