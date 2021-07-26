@@ -1,2 +1,7 @@
-.Rhistory
+.gitignore
+**/.Rhistory
 
+# Folders
+Figures/
+Tables/
+Test/

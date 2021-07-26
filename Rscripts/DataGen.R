@@ -1,5 +1,5 @@
 # Purpose: Generate data for surrogate model simulations.
-# Updated: 2020-12-02
+# Updated: 2021-07-26
 library(mvnfast)
 
 # -----------------------------------------------------------------------------
@@ -188,6 +188,7 @@ GetLinPred <- function(covars, pcs, pve_geno, pve_pcs) {
 #' 
 #' Does *not* include the contribution of genotype.
 #'
+#' @param dist Distribution, from among "lognorm", "norm", "t".
 #' @param eta nx2 linear predictor matrix.
 #' @param n0 Number of complete obs.
 #' @param n1 Number of obs with surrogate only.
@@ -197,15 +198,25 @@ GetLinPred <- function(covars, pcs, pve_geno, pve_pcs) {
 #' @importFrom stats rnorm
 #' @importFrom mvnfast rmvn
 
-GenPheno <- function(eta, n0, n1 = 0, n2 = 0, rho) {
+GenPheno <- function(dist = "norm", eta, n0, n1 = 0, n2 = 0, rho) {
   
   # Residuals.
   sigma <- matrix(c(1, rho, rho, 1), nrow = 2)
   n <- n0 + n1 + n2
-  resid <- mvnfast::rmvn(n = n, mu = c(0, 0), sigma = sigma)
+  
+  # Multivariate normal. 
+  if (dist %in% c("lognorm", "norm")) {
+    resid <- mvnfast::rmvn(n = n, mu = c(0, 0), sigma = sigma)
+  } 
+  
+  # Multivariate t. 
+  if (dist == "t") {
+    resid <- mvnfast::rmvt(n = n, mu = c(0, 0), sigma = sigma, df = 3)
+  }
   
   # Response.
   y <- eta + resid
+  if (dist == "lognorm") {y <- exp(y)}
   colnames(y) <- paste0("y", seq(1:2))
 
   # Missingness.
@@ -225,6 +236,7 @@ GenPheno <- function(eta, n0, n1 = 0, n2 = 0, rho) {
 
 #' Data Generating Process
 #' 
+#' @param dist Distribution, from among "lognorm", "norm", "t".
 #' @param n0 Number of complete obs.
 #' @param n1 Number of obs with surrogate only.
 #' @param n2 Number of obs with target only.
@@ -234,7 +246,7 @@ GenPheno <- function(eta, n0, n1 = 0, n2 = 0, rho) {
 #' @param snps Number of SNPs.
 #' @param 
 
-GenData <- function(n0, n1, n2, pve_geno, pve_pcs, rho, snps) {
+GenData <- function(dist, n0, n1, n2, pve_geno, pve_pcs, rho, snps) {
   
   # Total observations.
   n <- n0 + n1 + n2
@@ -258,7 +270,7 @@ GenData <- function(n0, n1, n2, pve_geno, pve_pcs, rho, snps) {
   eta <- lin_pred$eta
   
   # Generate phenotype.
-  pheno <- GenPheno(eta = eta, n0 = n0, n1 = n1, n2 = n2, rho = rho)
+  pheno <- GenPheno(dist = dist, eta = eta, n0 = n0, n1 = n1, n2 = n2, rho = rho)
   
   # Output.
   out <- list(

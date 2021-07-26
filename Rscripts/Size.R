@@ -33,6 +33,9 @@ opt <- make_option(c("--out"), type = "character", help = "Output stem", default
 opt_list <- c(opt_list, opt)
 
 # Data generating process.
+opt <- make_option(c("--dist"), type = "character", help = "Distribution", default = "norm")
+opt_list <- c(opt_list, opt)
+
 opt <- make_option(c("--mT"), type = "numeric", help = "Target Missingness", default = 0.00)
 opt_list <- c(opt_list, opt)
 
@@ -49,7 +52,8 @@ params <- parse_args(object = parsed_opts)
 
 # Output stem.
 out_suffix <- paste0(
-  "N", params$n0, 
+  "N", params$n0,
+  "_", params$dist,
   "_MT", params$mT * 100, 
   "_MS", params$mS * 100, 
   "_R", params$rho * 100, 
@@ -83,11 +87,11 @@ var_emp <- apply(sim[, points], 2, var)
 
 # Output.
 est <- data.frame(
-  "Parameter" = c("b.biv", "b.uni", "a", "S11", "S12", "S22"),
-  "N" = nrow(sim),
-  "Bias" = means,
-  "ModelVar" =  var_model,
-  "EmpiricalVar" = var_emp
+  Parameter = c("b.biv", "b.uni", "a", "S11", "S12", "S22"),
+  N = nrow(sim),
+  Bias = means,
+  ModelVar =  var_model,
+  EmpiricalVar = var_emp
 )
 
 setwd(base_dir)

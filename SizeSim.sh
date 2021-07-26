@@ -11,7 +11,7 @@ do
 	
 
 	# Run simulation.
-	Rscript Rscripts/Size.R --n0 1000 --snps 10 --reps 10 --idx ${idx} --out "Test/" --mT ${mT} --mS ${mS} --rho ${rho};
+	Rscript Rscripts/Size.R --dist "lognorm" --n0 1000 --snps 10 --reps 10 --idx ${idx} --out "Test/LogNorm/" --mT ${mT} --mS ${mS} --rho ${rho};
 done
 
 # Merge results. 
@@ -23,7 +23,7 @@ Rscript Rscripts/Tabulate-Concat.R --dir "Test/EstH0" --out "Tables/EstH0.txt";
 Rscript Rscripts/Tabulate-Rejection.R --dir "Test/TypeIerror" --out "Tables/Size.txt";
 
 # Calculate relative efficiency.
-Rscript Rscripts/Tabulate-Efficiency.R --tab "Tables/EstH0.txt" --out "Tables/RE_H0.txt";
+#Rscript Rscripts/Tabulate-Efficiency.R --tab "Tables/EstH0.txt" --out "Tables/RE_H0.txt";
 
 # Quantile quantile plots.
-Rscript Rscripts/Plot-Size.R --dir "Test/TypeIerror";
+#Rscript Rscripts/Plot-Size.R --dir "Test/TypeIerror";

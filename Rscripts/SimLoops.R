@@ -3,6 +3,17 @@ source("DataGen.R")
 # devtools::install_github(repo = 'zrmacc/MatrixOps')
 library(MatrixOps)
 
+#' Rank Normal Transformation
+#' 
+#' @param u Numeric vector.
+#' @return Numeric vector.
+
+RankNorm <- function(u) {
+  probs <- (order(u) - 0.5) / (length(u))
+  z <- stats::qnorm(probs)
+  return(z)
+}
+
 # -----------------------------------------------------------------------------
 # Size Simulations.
 # -----------------------------------------------------------------------------
@@ -99,6 +110,7 @@ SizeSimLoop <- function(params) {
   
   # Generate data. 
   data <- GenData(
+    dist = params$dist,
     n0 = params$n0,
     n1 = sizes$n1,
     n2 = sizes$n2,
@@ -107,6 +119,17 @@ SizeSimLoop <- function(params) {
     rho = params$rho,
     snps = params$snps
   )
+  
+  if (params$dist != "norm") {
+    pheno <- data$pheno
+    y1 <- pheno[, 1]
+    y2 <- pheno[, 2]
+    y1[!is.na(y1)] <- RankNorm(y1[!is.na(y1)])
+    y2[!is.na(y2)] <- RankNorm(y2[!is.na(y2)])
+    pheno <- cbind(y1, y2)
+    data$pheno <- pheno
+    rm(pheno, y1, y2)
+  }
   
   design <- cbind(1, data$covars, data$pcs)
   geno <- data.frame(data$geno)
