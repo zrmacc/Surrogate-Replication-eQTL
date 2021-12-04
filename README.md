@@ -19,4 +19,4 @@ Ensure the dependencies under `scripts/dependencies.R` are installed.
 
 # eQTL analyses
 
-eQTL summary statistics for SNP-transcript pairs with p-values <= 1e-3 are located under `data`. In each case the target tissue is the substantia nigra. The surrogate tissues include whole blood, skeletal muscle, and cerebellum. `data/data_description.tsv` provides a description of the columns of each `.rds` file.
+eQTL summary statistics for SNP-transcript pairs with p-values <= 1e-3 are located under `data`. In each case the target tissue is the substantia nigra. The surrogate tissues include whole blood, skeletal muscle, and cerebellum. `data/data_description.tsv` provides a description of the columns in each of the summary statistic files. Correlations between the target and surrogate tissue, by transcript, among complete-cases, are provided under `correlations`.

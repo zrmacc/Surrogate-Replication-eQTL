@@ -1,0 +1,7 @@
+Fields	Description
+chr	Chromosome.
+target	Target tissue.
+surrogate	Surrogate tissue.
+gene	Gene name.
+pearson	Pearson correlation coefficient.
+spearman	Spearman correlation coefficient.
