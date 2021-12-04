@@ -1,0 +1,10 @@
+Fields	Description
+chr	Chromosome.
+gene	Gene name.
+snp	SNP identifier.
+biv_beta	Effect size from joint (bivariate) analysis.
+biv_se	Standard error from joint (bivariate) analysis.
+biv_p	P-value from joint (bivariate) analysis.
+uni_beta	Effect size from marginal (univariate) analysis.
+uni_se	Standard error from marginal (univariate) analysis.
+uni_p	P-value from marginal (univariate) analysis.
